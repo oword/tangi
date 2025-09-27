@@ -150,7 +150,7 @@ int main(int, char**)
                 
                 tangi::render_imgui_file();
                 ImGui::Text("Welcome to Tangi!");
-                ImGui::Text("%ws",tangi::music_folder.c_str());
+                ImGui::Text("music source: %ws",tangi::music_folder.c_str());
             }
             ImGui::End();
         }
