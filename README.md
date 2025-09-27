@@ -1,8 +1,10 @@
 # tangi
 
-music player written in c++ similar to foobar2000
+##music player written in c++ similar to foobar2000
 
-  
+![logo](pictures/logo.png) 
+
+![preview](pictures/preview.png)  
 
 Currently this is just a simple framework built in ImGui but here are some plans for future features.
 
@@ -17,7 +19,3 @@ Currently this is just a simple framework built in ImGui but here are some plans
 **features I might do:**
 - mixer features like fl studio but basic
 - download or stream songs from Youtube or other platforms
-
-![logo](pictures/logo.png) 
-
-![preview](pictures/preview.png)
