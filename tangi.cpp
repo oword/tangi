@@ -1,10 +1,7 @@
-// Dear ImGui: standalone example application for Windows API + DirectX 11
-
-// Learn about Dear ImGui:
-// - FAQ                  https://dearimgui.com/faq
-// - Getting Started      https://dearimgui.com/getting-started
-// - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
-// - Introduction, links and more at the top of imgui.cpp
+/* current project goals:
+    * simple previewer for songs in the music folder
+    * implement simple music player functionality
+*/
 
 #include <iostream>
 #include "imgui/imgui.h"
@@ -148,9 +145,11 @@ int main(int, char**)
             ImGui::Begin("Tangi", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar);
             {
                 
-                tangi::render_imgui_file();
+                tangi::draw_imgui_menu_bar();
                 ImGui::Text("Welcome to Tangi!");
                 ImGui::Text("music source: %ws",tangi::music_folder.c_str());
+                tangi::draw_music_list();
+                tangi::draw_player_buttons();
             }
             ImGui::End();
         }
