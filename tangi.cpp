@@ -1,6 +1,12 @@
 /* current project goals:
-    * simple previewer for songs in the music folder
-    * implement simple music player functionality
+    * simple previewer for songs in the music folder (finished)
+    * implement simple music player functionality (finished)
+    * polish the music player functionality ()
+    * polish the mixer, add more features
+    * finish the music player buttons
+    * implement image / metadata previewer
+    * implement visualizer
+    * implement song crossfading (maybe even automixer?)
 */
 
 #include <iostream>
@@ -9,6 +15,7 @@
 #include "imgui/imgui_impl_dx11.h"
 #include <d3d11.h>
 #include <tchar.h>
+#include "miniaudio/miniaudio.h"
 #include "tangi/tangi.hpp"
 
 // Data
@@ -49,6 +56,15 @@ int main(int, char**)
     // Show the window
     ::ShowWindow(hwnd, SW_SHOWDEFAULT);
     ::UpdateWindow(hwnd);
+
+    //initialize miniaudio
+    ma_result result{ma_engine_init(NULL, &tangi::engine)};
+
+    if (result != MA_SUCCESS) //probably wanna handle this better later
+    {
+        std::cout << "miniaudio engine failed to start";
+        return 1;
+    }
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -150,6 +166,7 @@ int main(int, char**)
                 ImGui::Text("music source: %ws",tangi::music_folder.c_str());
                 tangi::draw_music_list();
                 tangi::draw_player_buttons();
+                tangi::draw_mixer_buttons();
             }
             ImGui::End();
         }

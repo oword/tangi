@@ -1,6 +1,7 @@
 project(
   'tangi',
   'cpp',
+  'c',
   version : '0.1',
   meson_version : '>= 1.3.0',
   default_options : ['warning_level=3', 'cpp_std=c++20'],
@@ -30,6 +31,8 @@ exe = executable(
   'imgui/imgui_impl_dx11.h',
   'imgui/imgui_impl_win32.cpp',
   'imgui/imgui_impl_win32.h',
+  'miniaudio/miniaudio.c',
+  'miniaudio/miniaudio.h',
   'tangi/tangi.hpp',
   'tangi/tangi.cpp',
   install : true,

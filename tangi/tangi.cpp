@@ -106,6 +106,8 @@ void tangi::draw_music_list()
             if (ImGui::Selectable(file.c_str(), is_selected))
             {
                 selected_index = i;
+                //kinda works for now but need to rework it
+                selected_song = file.c_str();
             }
             if (is_selected)
             {
@@ -116,9 +118,21 @@ void tangi::draw_music_list()
     }
 }
 
+std::string tangi::get_current_song_dir()
+{
+    //convert the folder into c str
+    std::string file{music_folder.begin(), music_folder.end()};
+
+    file += '\\';
+    file += selected_song;
+    
+    std::cout << file;
+    return file;
+}
+
 void tangi::draw_player_buttons()
 {
-        if(ImGui::Button("shuffle"))
+    if(ImGui::Button("shuffle"))
     {
         std::cout << "shuffling folder cuh";
     }
@@ -130,7 +144,28 @@ void tangi::draw_player_buttons()
     ImGui::SameLine();
     if(ImGui::Button("play"))
     {
-        std::cout << "playing the song cuh";
+        const char* song{get_current_song_dir().c_str()};
+
+        //stop playing any songs that are currently playing(later we need a new solution so we can do mixing and crossfading)
+        if(ma_sound_is_playing(&cur_song))
+        {
+            ma_sound_stop(&cur_song);
+            ma_sound_uninit(&cur_song);
+        }
+        std::cout << "playing the song cuh -> " << selected_song << '\n';
+        //play the highlighted song
+        ma_sound_init_from_file(&engine, get_current_song_dir().c_str(), 0, NULL, NULL, &cur_song);
+        ma_sound_start(&cur_song);
+    }
+        ImGui::SameLine();
+    //super temporary solution it kinda sucks but im lazy to do it better atm
+    if(ImGui::Button("stop"))
+    {
+        if(ma_sound_is_playing(&cur_song))
+        {
+            ma_sound_stop(&cur_song);
+            ma_sound_uninit(&cur_song);
+        }
     }
     ImGui::SameLine();
     if(ImGui::Button("next"))
@@ -142,6 +177,30 @@ void tangi::draw_player_buttons()
     {
         std::cout << "playing the same song cuh";
     }
+
+    if(ma_sound_is_playing(&cur_song))
+        ImGui::Text("$$$ now playing $$$");
+}
+
+void tangi::draw_mixer_buttons()
+{
+    static float volume{1.f};
+    if(ImGui::VSliderFloat("##volume", ImVec2(20, 160), &volume, 0.f, 1.f, ""))
+    {
+        ma_sound_set_volume(&cur_song, volume);
+    }
     ImGui::SameLine();
-    
+    static float pitch{1.f};
+    if(ImGui::VSliderFloat("##pitch", ImVec2(20, 160), &pitch, 0.5f, 2.f, ""))
+    {
+        ma_sound_set_pitch(&cur_song, pitch);
+    }
+    ImGui::SameLine();
+    static float pan{1.f};
+    if(ImGui::VSliderFloat("##pan", ImVec2(20, 160), &pan, -1.f, 1.f, ""))
+    {
+        ma_sound_set_pan(&cur_song, pan);
+    }
+
+    ImGui::Text("vol | pitch | pan");
 }
