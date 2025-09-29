@@ -9,10 +9,11 @@ Currently this is just a simple framework built in ImGui but here are some plans
 **List of features I'm planning on implementing:**
 - music visualizer similar to milkdrop(as close as I can get)
 - bass visualizer with colors relative to bass
-- vol slider and song scrolling
-- pause + play song
+- ✅vol slider
+- song scrolling
+- ✅pause + play song
 - song preview with icons and metadata
-- folder/playlist previewer and song selection
+- ✅folder/playlist previewer and song selection
 
 **features I might do:**
 - mixer features like fl studio but basic
